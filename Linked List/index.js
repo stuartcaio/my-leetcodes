@@ -54,6 +54,18 @@ class DoublyLinkedList{
         this.tail = this.tail.previous;
         this.tail.next = null;
     }
+
+    findMiddle(){
+        let slowPointer = this.head;
+        let fastPointer = this.head;
+
+        while(fastPointer && fastPointer.next){
+            slowPointer = slowPointer.next;
+            fastPointer = fastPointer.next.next;
+        };
+
+        return slowPointer;
+    }
 };
 
 const doublyLinkedList = new DoublyLinkedList();
@@ -66,5 +78,6 @@ doublyLinkedList.addItemInStart(5);
 doublyLinkedList.removeItemInStart();
 doublyLinkedList.removeItemInEnd();
 
+console.log(doublyLinkedList.findMiddle().value);
 console.log(doublyLinkedList.head.value, doublyLinkedList.head.next.value, doublyLinkedList.head.next.next.value);
 console.log(doublyLinkedList.tail.value, doublyLinkedList.tail.previous.value, doublyLinkedList.tail.previous.previous.value);
