@@ -1,18 +1,14 @@
 function missingNumber(numbers = []){
     let missedNumber = 0;
 
-    const firstArray = [];
-    const secondArray = [];
-
     for(let x = 0; x < numbers.length; x++){
         missedNumber ^= numbers[x];
-        firstArray.push(numbers[x]);
     };
 
     for(let y = 0; y <= numbers[numbers.length - 1]; y++){
         missedNumber ^= y;
-        secondArray.push(y);
     };
+    
     return missedNumber;
 };
 
