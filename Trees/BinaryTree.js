@@ -18,7 +18,7 @@ class BinaryTree{
     };
 
     insert(value){
-        if(this.root == null){
+        if(this.root.current == null){
             this.root = new Node(value);
         } else{
             this.#insertInBranch(value, this.root);      
@@ -46,6 +46,8 @@ class BinaryTree{
             current = this.root;
         };
 
+        console.log(current)
+
         if(value > current.current && current.right != null && current.current != value){
             this.search(value, current.right);
         };
@@ -53,6 +55,16 @@ class BinaryTree{
         if(value < current.current && current.left != null && current.current != value){
             this.search(value, current.left);
         };
+    };
+
+    listItems(currentNode = this.root, result = []){
+        if(currentNode){
+            result.push(currentNode.current);
+            this.listItems(currentNode.left, result);
+            this.listItems(currentNode.right, result);
+        };
+
+        return result;
     };
 };
 
@@ -63,4 +75,5 @@ for(let i = 0; i < numbers.length; i++){
     binaryTree.insert(numbers[i]);
 };
 
-binaryTree.search(52);
+// binaryTree.search(52);
+console.log(binaryTree.listItems());
