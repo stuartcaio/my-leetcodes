@@ -39,13 +39,10 @@ class RedBlackTree{
             } else{
                 current.left = new Node(value, RED, current);
 
+               this.#changeColors(current);
+
                 if(current.color == RED && current.parent.right == null){
                     this.#rotateLeft(current)
-                };
-
-                if(current.color == RED && current.parent.right.color == RED){
-                    current.color = BLACK;
-                    current.parent.right.color = BLACK;
                 };
             };
         } else{
@@ -55,7 +52,7 @@ class RedBlackTree{
                 current.right = new Node(value, RED, current);
 
                 this.#changeColors(current);
-
+                
                 if(current.color == RED && current.parent.left == null){
                     this.#rotateRight(current)
                 };
@@ -64,16 +61,18 @@ class RedBlackTree{
     };
 
     #changeColors(currentNode){
-        const parentHasTwoChilds = ![currentNode.parent.left, currentNode.parent.right].includes(null);
-
-        if(currentNode.color == RED && (parentHasTwoChilds && currentNode.parent.left.color == RED && currentNode.parent.right.color == RED)){
-            currentNode.parent.right.color = BLACK;
-            currentNode.parent.left.color = BLACK;
-            currentNode.parent.color = RED;
-
-            if(currentNode.parent.parent.color == RED){
-                this.#changeColors(current.parent)
-            }
+        if(currentNode.parent){
+            const parentHasTwoChilds = ![currentNode.parent.left, currentNode.parent.right].includes(null);
+    
+            if(currentNode.color == RED && (parentHasTwoChilds && currentNode.parent.left.color == RED && currentNode.parent.right.color == RED)){
+                currentNode.parent.right.color = BLACK;
+                currentNode.parent.left.color = BLACK;
+                currentNode.parent.color = RED;
+    
+                if(currentNode.parent.parent && currentNode.parent.parent.color == RED){
+                    this.#changeColors(currentNode.parent)
+                }
+            };
         };
     };
 
@@ -87,6 +86,8 @@ class RedBlackTree{
         if(node.parent.color == RED && (node.parent.parent != null && node.parent.parent.color == RED)){
             this.#rotateLeft(node);
         };
+
+        this.#changeColors(node);
     };
 
     #rotateRight(node){        
@@ -99,6 +100,8 @@ class RedBlackTree{
         if(node.parent.color == RED && (node.parent.parent != null && node.parent.parent.color == RED)){
             this.#rotateRight(node);
         };
+
+        this.#changeColors(node);
     };
 
     search(value, current = null){
